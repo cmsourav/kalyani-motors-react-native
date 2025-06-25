@@ -5,7 +5,7 @@ import HomeBody from './component/HomeBody'
 
 const HomeScreen = () => {
   return (
-<ScrollView>
+<ScrollView style={{backgroundColor:'#fff', height: '100%'}}>
     <Header />
     <HomeBody />
 </ScrollView>

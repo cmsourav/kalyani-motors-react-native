@@ -6,7 +6,8 @@ const Header = () => {
     <View style={styles.container}>
       <ImageBackground
         source={require('../../../../assets/images/header.png')}
-        style={{ height: 130, }}
+        style={{ height: 130 }}
+        resizeMode='cover'
       >
         <View style={styles.infoContainer}>
           <View>
@@ -16,7 +17,7 @@ const Header = () => {
           <View style={{ flexDirection: 'row' }}>
             <Image
               source={require('../../../../assets/images/bell.png')}
-              style={[styles.icon, { marginRight: 30 }]}
+              style={{ marginRight: 30, width: 20, height:20 }}
             />
             <Image
               source={require('../../../../assets/images/menu.png')}

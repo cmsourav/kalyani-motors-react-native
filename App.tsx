@@ -2,13 +2,13 @@
 
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import HomeScreen from './src/screens/home/HomeScreen'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { NavigationContainer } from '@react-navigation/native';
+import BottomBar from './src/navigation/BottomBar';
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <HomeScreen />
-    </SafeAreaView>
+    <BottomBar />
   )
 }
 
