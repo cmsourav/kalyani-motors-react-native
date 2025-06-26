@@ -2,7 +2,6 @@ import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from '../screens/home/HomeScreen';
 import MessageScreen from '../screens/message/MessageScreen';
 import AddItem from '../screens/Add/AddItem';
 import CalenderScreen from '../screens/calender/CalenderScreen';
@@ -19,6 +18,7 @@ const BottomBar = () => {
         tabBarIcon: ({ focused, color, size }) => {
           switch (route.name) {
             case 'Home':
+              //  return <Icon name="home" size={30} color="#900" />
               return <Image source={require('../assets/home_active.png')} style={styles.bottomTabIcons} />
               break;
             case 'Message':
@@ -36,7 +36,7 @@ const BottomBar = () => {
           }
         },
         tabBarStyle: { height: 60, backgroundColor: '#FFFFFF' },
-        tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' }
+        tabBarItemStyle: { justifyContent: 'center', alignItems: 'center', marginTop: 4 }
       })}>
         <Tab.Screen name='Home' component={HomeStack} />
         <Tab.Screen name='Message' component={MessageScreen} />

@@ -1,77 +1,100 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import HeadingText from './HeadingText'
-import DateCard from './DateCard'
-import ProjectCard from './ProjectCard'
-import OngoingCard from './OngoingCard'
-import { useNavigation } from '@react-navigation/native'
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React from 'react';
+import HeadingText from './HeadingText';
+import DateCard from './DateCard';
+import ProjectCard from './ProjectCard';
+import OngoingCard from './OngoingCard';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../types/RootStackParamList';
+import { dates, projectData } from '../../../assets/data/HomeData';
 
 const HomeBody = () => {
-    const dates: { day: string, date: string }[] = [
-        { day: 'Mon', date: '5' }, { day: 'Tue', date: '6' }, { day: 'Wed', date: '7' }, { day: 'Thu', date: '8' },
-        { day: 'Fri', date: '9' }, { day: 'Sat', date: '10' }, { day: 'Sun', date: '11' }, { day: 'Mon', date: '12' },
-    ];
+  type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+  const navigation = useNavigation<NavigationProp>();
 
-    const projectData: { title: string, description: string }[] = [
-        { title: 'Personal \n to-do', description: 'Ongoing' }, { title: 'Work \n to-do', description: 'In Process' },
-        { title: 'High Priority \n Task', description: 'Go to task' }, { title: 'Personal \n Things', description: 'On-hold' }
-    ]
+  const handlePress = () => {
+    navigation.navigate('Project');
+  };
 
-    const navigation = useNavigation()
-
-    const handlePress = () => {
-        navigation.navigate('Project')
-    }
-
-    return (
-        <View style={styles.container}>
-
-            <HeadingText title='Select Date' />
-            <View style={styles.spacingContainer1} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {dates.map((item, index) => (
-                    <DateCard key={index} day={item.day} date={item.date} isSelected={index === 0} />
-                ))}
-            </ScrollView>
-
-            <View style={styles.spacingContainer2} />
-            <HeadingText title='Projects' />
-            <View style={styles.spacingContainer3} />
-            <View style={styles.gridView}>
-                {projectData.map((item, index) => (
-                    <TouchableOpacity key={index} onPress={handlePress} >
-                        <ProjectCard title={item.title} description={item.description} />
-                    </TouchableOpacity>
-                ))}
-            </View>
-
-            <View style={styles.spacingContainer2} />
-            <HeadingText title='Ongoing task' />
-            <View style={styles.spacingContainer3} />
-            <OngoingCard 
-            title= 'Candidate Management' 
-            description= 'For - Zoho Project'
-            teamType='Teammates'
-            fillPercentage={78}
-            progressPercentage='78%' 
-            date='June 6, 2022'
-            cardBg={['#EAEFFF', '#FAF9FF']} />
-            <View style={styles.spacingContainer2} />
+  return (
+    <View style={styles.container}>
+      <View>
+        <HeadingText title="Select Date" />
+        <FlatList
+          contentContainerStyle={{ marginStart: 20, marginEnd: 150 }}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={dates}
+          renderItem={({ item, index }) => (
+            <DateCard
+              key={index}
+              day={item.day}
+              date={item.date}
+              isSelected={index === 0}
+            />
+          )}
+        />
+        <HeadingText title="Projects" />
+        <View style={styles.gridView}>
+          {projectData.map((item, index) => (
+            <TouchableOpacity key={index} onPress={handlePress}>
+              <ProjectCard title={item.title} description={item.description} />
+            </TouchableOpacity>
+          ))}
         </View>
-    )
-}
 
-export default HomeBody
+        <HeadingText title="Ongoing task" />
+        <View style={styles.spacingContainer3}>
+          <OngoingCard
+            title="Candidate Management"
+            description="For - Zoho Project"
+            teamType="Teammates"
+            fillPercentage={78}
+            progressPercentage="78%"
+            date="June 6, 2022"
+            tagColor="#2051E5"
+            cardBg={['#EAEFFF', '#FAF9FF']}
+          />
+          <View style={{ marginTop: 10 }} />
+          <OngoingCard
+            title="Candidate Management"
+            description="For - Zoho Project"
+            teamType="Teammates"
+            fillPercentage={78}
+            progressPercentage="78%"
+            date="June 6, 2022"
+            tagColor="#2051E5"
+            cardBg={['#EAEFFF', '#FAF9FF']}
+          />
+          <View style={{ marginBottom: 10 }} />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default HomeBody;
 
 const styles = StyleSheet.create({
-    container: { marginHorizontal: 25 },
-    spacingContainer1: { marginTop: 19 },
-    spacingContainer2: { marginTop: 25 },
-    spacingContainer3: { marginTop: 15 },
-    gridView: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        gap: 10
-    }
-})
+  container: {
+    flex: 1,
+  },
+  spacingContainer3: {
+    marginHorizontal: 20,
+  },
+  gridView: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 10,
+    marginHorizontal: 18,
+  },
+});

@@ -1,23 +1,29 @@
-import { Image, ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React from 'react';
 
 const Header = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
         source={require('../../../../assets/images/header.png')}
-        style={{ height: 130 }}
-        resizeMode='cover'
+        style={styles.bgImg}
       >
         <View style={styles.infoContainer}>
-          <View>
+          <View style={{ justifyContent: 'center', marginLeft: 24 }}>
             <Text style={styles.greetings}>Good Morning</Text>
             <Text style={styles.uName}>Sourav Raj CM</Text>
           </View>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={styles.iconBox}>
             <Image
               source={require('../../../../assets/images/bell.png')}
-              style={{ marginRight: 30, width: 20, height:20 }}
+              style={{ width: 21, height: 20, marginRight: 30 }}
             />
             <Image
               source={require('../../../../assets/images/menu.png')}
@@ -27,101 +33,47 @@ const Header = () => {
         </View>
       </ImageBackground>
     </View>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    height: 100,
     backgroundColor: '#2051E5',
-    height: 140,
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
-    marginBottom: 25,
+  },
+  bgImg: {
+    height: 100,
+    width: 200,
   },
   infoContainer: {
-    position: 'relative',
-    top: '40%',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 24,
   },
   greetings: {
     fontSize: 14,
-    fontWeight: '400',
     color: '#fff',
     marginBottom: 6,
+    fontFamily: 'Poppins-Medium'
   },
   uName: {
-    fontSize: 24,
-    fontWeight: '500',
+    fontSize: 22,
     color: '#fff',
+    fontFamily: 'Poppins-Medium'
   },
   icon: {
     width: 24,
-    height: 19
-  }
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { ImageBackground, StyleSheet, Text, View } from 'react-native'
-// import React from 'react'
-
-// const Header = () => {
-//   return (
-//     <View style={styles.container}>
-//       <ImageBackground
-//         source={require('../../../../assets/images/header.png')}
-//         style={styles.headerImg} >
-//         <View style={styles.contentContainer}>
-//           <View>
-// <Text>Hellooooo</Text>
-// <Text>Hellooooo</Text>
-//           </View>
-//           <View>
-//             <Text>Hellooooo</Text>
-//             <Text>Hellooooo</Text>
-//           </View>
-//         </View>
-//       </ImageBackground>
-//     </View>
-//   )
-// }
-
-// export default Header
-
-// const styles = StyleSheet.create({
-//   container: {
-//     height: 140,
-//     backgroundColor: '#2051E5',
-//     borderBottomLeftRadius: 20,
-//     borderBottomRightRadius: 20,
-//   },
-//   headerImg: {
-//     height: 130,
-//     width: 200,
-//   },
-//   contentContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//   },
-// })
+    height: 19,
+  },
+  iconBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    right: -140,
+  },
+});
