@@ -1,6 +1,12 @@
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Animated } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Animated,
+} from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
-import Icon from 'react-native-vector-icons/Feather';
 import AddCard from './components/AddCard';
 import OrderDetails from './components/OrderDetails';
 import MainCard from './components/MainCard';
@@ -19,12 +25,10 @@ const MessageScreen = () => {
   const [savedCards, setSavedCards] = useState<SavedCard[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
-  // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
 
   const handleAddCardPress = () => {
-    // Animate in MainCard
     setShowMainCard(true);
     Animated.parallel([
       Animated.timing(fadeAnim, {
@@ -35,25 +39,23 @@ const MessageScreen = () => {
       Animated.spring(scaleAnim, {
         toValue: 1,
         tension: 50,
-        friction: 7,
+        friction: 4,
         useNativeDriver: true,
       }),
     ]).start();
   };
 
   const handleCardVerified = (cardData: SavedCard) => {
-    setSavedCards(prev => [cardData, ...prev]); // Add new card at the beginning
+    setSavedCards(prev => [cardData, ...prev]);
     setShowMainCard(false);
     setCurrentCardIndex(0);
-    
-    // Reset animations
+
     fadeAnim.setValue(0);
     scaleAnim.setValue(0.8);
   };
 
   const renderSavedCard = (card: SavedCard) => (
     <View style={styles.savedCardContainer}>
-      {/* Card Number and CVV Row */}
       <View style={styles.row}>
         <View style={styles.inputGroup}>
           <Text style={styles.inputLabel}>Card Number</Text>
@@ -67,13 +69,11 @@ const MessageScreen = () => {
         </View>
       </View>
 
-      {/* Card Holder Name - Full Width */}
       <View style={styles.fullWidthInputGroup}>
         <Text style={styles.inputLabel}>Card Holder Name</Text>
         <Text style={styles.cardHolderDisplay}>{card.cardHolderName}</Text>
       </View>
 
-      {/* Expiry, Zipcode, and Card Badge Row */}
       <View style={styles.row}>
         <View style={styles.smallInputGroup}>
           <Text style={styles.inputLabel}>Expiry Date</Text>
@@ -93,40 +93,44 @@ const MessageScreen = () => {
   return (
     <View style={styles.container}>
       {showMainCard ? (
-        <Animated.View 
+        <Animated.View
           style={[
             styles.mainCardContainer,
             {
               opacity: fadeAnim,
               transform: [{ scale: scaleAnim }],
-            }
+            },
           ]}
         >
           <MainCard onCardVerified={handleCardVerified} />
         </Animated.View>
       ) : (
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContainer}
-          style={styles.scrollView}
-        >
-          {savedCards.map((card, index) => (
-            <View key={card.id} style={styles.cardWrapper}>
-              {renderSavedCard(card)}
+        <View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContainer}
+          >
+            {savedCards.map((card, index) => (
+              <View key={card.id} style={styles.cardWrapper}>
+                {renderSavedCard(card)}
+              </View>
+            ))}
+            <View style={styles.cardWrapper}>
+              <AddCard onPress={handleAddCardPress} />
             </View>
-          ))}
-          <View style={styles.cardWrapper}>
-            <AddCard onPress={handleAddCardPress} />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       )}
-      
-      <OrderDetails />
-      <View style={{height: 35}} />
-      <TouchableOpacity style={styles.button}>
-        <Text style={{fontSize: 16, fontWeight: '600', color: '#FFF'}}>Pay Now</Text>
-      </TouchableOpacity>
+      <View style={{ alignItems: 'center', marginTop: 35 }}>
+        <OrderDetails />
+        <View style={{ height: 35 }} />
+        <TouchableOpacity style={styles.button}>
+          <Text style={{ fontSize: 16, fontWeight: '600', color: '#FFF' }}>
+            Pay Now
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -137,7 +141,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    alignItems: 'center',
   },
   button: {
     width: 250,
@@ -150,7 +153,7 @@ const styles = StyleSheet.create({
   },
   savedCardContainer: {
     width: 350,
-    height: 240,
+    height: 215,
     backgroundColor: '#000000',
     marginTop: 30,
     elevation: 3,
@@ -239,7 +242,7 @@ const styles = StyleSheet.create({
     minWidth: 60,
   },
   cardBadgeText: {
-    fontSize: 12,
+    fontSize: 24,
     fontStyle: 'italic',
     fontWeight: '800',
     color: '#FFF',
@@ -249,17 +252,11 @@ const styles = StyleSheet.create({
   scrollContainer: {
     padding: 10,
   },
-  scrollView: {
-    flex: 1,
-  },
   cardWrapper: {
     width: 350,
-    height: 240,
-    marginRight: 10,
+    marginHorizontal: 10,
   },
   mainCardContainer: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
 });
